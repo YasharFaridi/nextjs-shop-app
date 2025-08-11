@@ -1,0 +1,62 @@
+[
+  {
+    "id": "01",
+    "title": "Artificial Inteligen",
+    "price": 299,
+    "slug_link": "artificial",
+    "image_src": "/images/artificial-inteligen.jpg",
+    "description": "The best AI book.",
+    "category": "Books",
+    "count": 10
+  },
+  {
+    "id": "02",
+    "title": "AI & Data science & Machine Learning",
+    "price": 950,
+    "slug_link": "artificial-intelligence-data-science-machine-learning-set-of-3-books",
+    "image_src": "/images/artificial-intelligence-data-science-machine-learning-set-of-3-books.jpg",
+    "description": "Pack of AI book all in one.",
+    "category": "Books",
+    "count": 5
+  },
+  {
+    "id": "03",
+    "title": "Data Science",
+    "price": 129,
+    "slug_link": "data-science",
+    "image_src": "/images/data-science.png",
+    "description": "Data science for everyone.",
+    "category": "Books",
+    "count": 20
+  },
+  {
+    "id": "04",
+    "title": "Elevating AI",
+    "price": 199,
+    "slug_link": "elevating-ai",
+    "image_src": "/images/elevating-ai.jpg",
+    "description": "Elevating AI book education with AI.",
+    "category": "Books",
+    "count": 8
+  },
+  {
+    "id": "05",
+    "title": "Machine Learning",
+    "price": 200,
+    "slug_link": "machin-learning",
+    "image_src": "/images/machin-learning.jpg",
+    "description": "Machine Learning for programmers.",
+    "category": "Books",
+    "count": 22
+  },
+  {
+    "id": "06",
+    "title": "Master Algorithm",
+    "price": 99,
+    "slug_link": "the-master-algorithm",
+    "image_src": "/images/the-master-algorithm.jpg",
+    "description": "AI algorithms for deep learning with python.",
+    "category": "Books",
+    "count": 3
+  }
+]
