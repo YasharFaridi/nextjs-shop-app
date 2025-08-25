@@ -25,7 +25,6 @@ function productPage() {
     }
 
     dispatch({ type: "ADD_CART_ITEM", payload: { ...product, qty } });
-    console.log("added");
   }
 
   return (
