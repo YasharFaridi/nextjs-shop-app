@@ -10,7 +10,6 @@ function Product({ product }) {
               src={product.image_src}
               alt={product.title}
               className="object-cover w-full h-full"
-              className="object-cover w-full h-full"
             />
           </figure>
         </a>
@@ -19,18 +18,15 @@ function Product({ product }) {
         <Link href={`/product/${product.slug_link}`}>
           <a>
             <h2 className="text-lg card-title line-clamp-2">{product.title}</h2>
-            <h2 className="text-lg card-title line-clamp-2">{product.title}</h2>
           </a>
         </Link>
 
         <h3 className="mt-2 font-bold">${product.price}</h3>
 
         <div className="justify-center mt-auto card-actions">
-        <div className="justify-center mt-auto card-actions">
           <button className="btn btn-primary">Add to cart</button>
         </div>
       </div>
-    </div>
     </div>
   );
 }

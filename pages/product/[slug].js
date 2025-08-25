@@ -35,9 +35,7 @@ function productPage() {
           <div> {product?.description} </div>
 
           <div className="flex flex-col items-center gap-4 md:w-1/3">
-            <h2 className="text-xl font-bold text-center">
-              ${product?.price}
-            </h2>
+            <h2 className="text-xl font-bold text-center">${product?.price}</h2>
             <div className="justify-start card-actions">
               <button className="w-full btn btn-primary">Add to card</button>
             </div>
