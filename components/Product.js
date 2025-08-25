@@ -3,9 +3,6 @@ import Link from "next/link";
 function Product({ product }) {
   return (
     <div className="flex flex-col shadow-lg card bg-base-300">
-function Product({ product }) {
-  return (
-    <div className="flex flex-col shadow-lg card bg-base-300">
       <Link href={`/product/${product.slug_link}`}>
         <a>
           <figure className="aspect-[4/3] overflow-hidden rounded-t-2xl">
@@ -18,8 +15,6 @@ function Product({ product }) {
           </figure>
         </a>
       </Link>
-
-      <div className="flex flex-col flex-grow card-body">
       <div className="flex flex-col flex-grow card-body">
         <Link href={`/product/${product.slug_link}`}>
           <a>
@@ -35,6 +30,7 @@ function Product({ product }) {
           <button className="btn btn-primary">Add to cart</button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
