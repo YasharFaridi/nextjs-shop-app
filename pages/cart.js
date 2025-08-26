@@ -1,9 +1,11 @@
 import Layout from "../components/Layout";
 import { useContext } from "react";
+import { useRouter } from "next/router";
 import { CartContext } from "../contexts/Cart";
 import Link from "next/link";
 
 function CartPage() {
+  const router = useRouter()
   const { state, dispatch } = useContext(CartContext);
   const {
     cart: { cartItems },
@@ -67,7 +69,7 @@ function CartPage() {
                   </td>
                   <td className="text-right">{cartItem.qty}</td>
                   <td className="text-right">${cartItem.price}</td>
-                  <th className="text-right">
+                  <th className="text-center">
                     <button
                       className="btn btn-error btn-xs"
                       onClick={() => removeItemsHandler(cartItem)}
@@ -80,12 +82,17 @@ function CartPage() {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan="3" className="bg-base-200">
+                <td colSpan="3" className=" text-lg text-right align-top">
                   Total price
                 </td>
-                <td className="text-lg text-right bg-base-200">
-                  $
-                  {cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}
+                <td className="text-lg text-center">
+                  <div className="flex flex-col gap-3">
+                    <p className="text-accent">
+                      $
+                      {cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}
+                    </p>
+                    <button className="btn btn-sm btn-success" onClick={()=> router.push('/shipping')}>Checkout</button>
+                  </div>
                 </td>
               </tr>
             </tfoot>
