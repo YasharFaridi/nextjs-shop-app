@@ -8,6 +8,10 @@ function CartPage() {
   const {
     cart: { cartItems },
   } = state;
+
+  function removeItemsHandler(cartItem) {
+    dispatch({ type: "REMOVE_CART_ITEMS", payload: cartItem });
+  }
   return (
     <Layout title="Cart">
       {cartItems.length === 0 ? (
@@ -45,7 +49,7 @@ function CartPage() {
             </thead>
             <tbody>
               {cartItems.map((cartItem) => (
-                <tr>
+                <tr key={cartItem.id}>
                   <td>
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
@@ -64,22 +68,27 @@ function CartPage() {
                   <td className="text-right">{cartItem.qty}</td>
                   <td className="text-right">${cartItem.price}</td>
                   <th className="text-right">
-                    <button className="btn btn-error btn-xs">Remove</button>
+                    <button
+                      className="btn btn-error btn-xs"
+                      onClick={() => removeItemsHandler(cartItem)}
+                    >
+                      Remove
+                    </button>
                   </th>
                 </tr>
               ))}
-              
             </tbody>
             <tfoot>
-                <tr>
-                    <td colSpan='3' className="bg-base-200">
-                        Total price
-                    </td>
-                    <td className="bg-base-200 text-right text-lg">
-                       ${cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}
-                    </td>
-                </tr>
-              </tfoot>
+              <tr>
+                <td colSpan="3" className="bg-base-200">
+                  Total price
+                </td>
+                <td className="text-lg text-right bg-base-200">
+                  $
+                  {cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       )}
