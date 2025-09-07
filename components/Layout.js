@@ -1,11 +1,22 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CartContext } from "../contexts/Cart";
 
 function Layout({ title, children }) {
   const { state, dispatch } = useContext(CartContext);
   const { cart } = state;
+
+  const [cartItemsCount, setCartItemsCount] = useState(0)
+  const [cartItemsPrice, setCartItemsPrice] = useState(0)
+
+  useEffect(()=>{
+    setCartItemsCount(cart.cartItems.reduce((acc, cur) => acc + cur.qty, 0))
+  },[cart.cartItems])
+  useEffect(()=>{
+    setCartItemsPrice(cart.cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0))
+  },[cart.cartItems])
+
   return (
     <>
       <Head>
@@ -40,7 +51,7 @@ function Layout({ title, children }) {
                       </svg>
                       {cart.cartItems.length > 0 && (
                         <span className="badge badge-sm indicator-item">
-                          {cart.cartItems.reduce((acc, cur) => acc + cur.qty, 0)}
+                          {cartItemsCount}
                         </span>
                       )}
                     </div>
@@ -50,8 +61,8 @@ function Layout({ title, children }) {
                     className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
                   >
                     <div className="card-body">
-                      <span className="font-bold text-lg">{cart.cartItems.reduce((acc, cur) => acc + cur.qty, 0)} Items</span>
-                      <span className="text-info">Total price: ${cart.cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}</span>
+                      <span className="font-bold text-lg">{cartItemsCount} Items</span>
+                      <span className="text-info">Total price: ${cartItemsPrice}</span>
                       <div className="card-actions">
                         <Link href="/cart">
                           <button className="btn btn-secondary btn-block">

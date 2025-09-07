@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useRouter } from "next/router";
 import { CartContext } from "../contexts/Cart";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 function CartPage() {
   const router = useRouter()
@@ -103,4 +104,4 @@ function CartPage() {
   );
 }
 
-export default CartPage;
+export default dynamic(()=> Promise.resolve(CartPage));
