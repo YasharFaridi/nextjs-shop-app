@@ -51,18 +51,18 @@ function reducer(state, action) {
 export function CartContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialCartContextState);
   const [cartLoaded, setCartLoaded] = useState(false); // state برای loader
- 
+
   useEffect(() => {
     const cookieCart = Cookies.get("cart")
       ? JSON.parse(Cookies.get("cart"))
       : { cartItems: [] };
     dispatch({ type: "INITIAL_CART", payload: cookieCart });
-    setCartLoaded(true); 
+    setCartLoaded(true);
   }, []);
 
   if (!cartLoaded) {
     return (
-      <div className="p-4 text-center font-bold text-lg">
+      <div className="p-4 text-lg font-bold text-center">
         <span className="loading loading-dots loading-xl"></span>
       </div>
     );

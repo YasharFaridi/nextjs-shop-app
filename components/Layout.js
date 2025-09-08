@@ -7,15 +7,15 @@ function Layout({ title, children }) {
   const { state, dispatch } = useContext(CartContext);
   const { cart } = state;
 
-  const [cartItemsCount, setCartItemsCount] = useState(0)
-  const [cartItemsPrice, setCartItemsPrice] = useState(0)
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [cartItemsPrice, setCartItemsPrice] = useState(0);
 
-  useEffect(()=>{
-    setCartItemsCount(cart.cartItems.reduce((acc, cur) => acc + cur.qty, 0))
-  },[cart.cartItems])
-  useEffect(()=>{
-    setCartItemsPrice(cart.cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0))
-  },[cart.cartItems])
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((acc, cur) => acc + cur.qty, 0));
+    setCartItemsPrice(
+      cart.cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)
+    );
+  }, [cart.cartItems]);
 
   return (
     <>
@@ -37,7 +37,7 @@ function Layout({ title, children }) {
                     <div className="indicator">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -61,8 +61,12 @@ function Layout({ title, children }) {
                     className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
                   >
                     <div className="card-body">
-                      <span className="font-bold text-lg">{cartItemsCount} Items</span>
-                      <span className="text-info">Total price: ${cartItemsPrice}</span>
+                      <span className="text-lg font-bold">
+                        {cartItemsCount} Items
+                      </span>
+                      <span className="text-info">
+                        Total price: ${cartItemsPrice}
+                      </span>
                       <div className="card-actions">
                         <Link href="/cart">
                           <button className="btn btn-secondary btn-block">
@@ -74,9 +78,6 @@ function Layout({ title, children }) {
                   </div>
                 </div>
               </div>
-              {/* <Link href="/cart">
-                <a>Cart</a>
-              </Link> */}
 
               <Link href="/login">
                 <a>Login</a>
@@ -85,7 +86,7 @@ function Layout({ title, children }) {
           </div>
         </header>
         <main className="container p-4 m-auto mt-4">{children}</main>
-        <footer className="footer footer-center p-2 bg-primary text-primary-content">
+        <footer className="p-2 footer footer-center bg-primary text-primary-content">
           <aside>
             <p className="font-bold">Created by Yashar Faridi</p>
             Copyright © 2025 - All right reserved

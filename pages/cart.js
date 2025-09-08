@@ -6,7 +6,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 
 function CartPage() {
-  const router = useRouter()
+  const router = useRouter();
   const { state, dispatch } = useContext(CartContext);
   const {
     cart: { cartItems },
@@ -83,16 +83,24 @@ function CartPage() {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan="3" className=" text-lg text-right align-top">
+                <td colSpan="3" className="text-lg text-right align-top ">
                   Total price
                 </td>
                 <td className="text-lg text-center">
                   <div className="flex flex-col gap-3">
                     <p className="text-accent">
                       $
-                      {cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}
+                      {cartItems.reduce(
+                        (acc, cur) => acc + cur.qty * cur.price,
+                        0
+                      )}
                     </p>
-                    <button className="btn btn-sm btn-success" onClick={()=> router.push('/shipping')}>Checkout</button>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => router.push("/shipping")}
+                    >
+                      Checkout
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -104,4 +112,4 @@ function CartPage() {
   );
 }
 
-export default dynamic(()=> Promise.resolve(CartPage));
+export default dynamic(() => Promise.resolve(CartPage));
