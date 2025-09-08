@@ -1,12 +1,31 @@
 import { useRouter } from "next/router";
+import { useContext } from "react";
 import productItems from "../../data/products.json";
 import Layout from "../../components/Layout";
+import { CartContext } from "../../contexts/Cart";
 
 function productPage() {
+  const { state, dispatch } = useContext(CartContext);
+
   const { query } = useRouter();
   const { slug } = query;
 
   const product = productItems.find((pItem) => pItem.slug_link === slug);
+
+  function addToCartHandler() {
+    const existingProduct = state.cart.cartItems.find(
+      (cartItem) => cartItem.id === product.id
+    );
+
+    const qty = existingProduct ? existingProduct.qty + 1 : 1;
+
+    if (product.count < qty) {
+      alert("Product is out!");
+      return;
+    }
+
+    dispatch({ type: "ADD_CART_ITEM", payload: { ...product, qty } });
+  }
 
   return (
     <Layout title={product?.title}>
@@ -37,7 +56,12 @@ function productPage() {
           <div className="flex flex-col items-center gap-4 md:w-1/3">
             <h2 className="text-xl font-bold text-center">${product?.price}</h2>
             <div className="justify-start card-actions">
-              <button className="w-full btn btn-primary">Add to card</button>
+              <button
+                className="w-full btn btn-primary"
+                onClick={addToCartHandler}
+              >
+                Add to card
+              </button>
             </div>
           </div>
         </div>
