@@ -17,7 +17,7 @@ export default NextAuth({
       return session;
     },
   },
-
+  
   async session({ session, token }) {
     if (token?._id) session.user._id = token._id;
 
