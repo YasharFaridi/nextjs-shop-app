@@ -1,9 +1,13 @@
 import db from "../../utils/db";
+import users from "../../data/users"
 import User from "../../models/userModel";
-import userItems from "../../data/users.json";
 
 export default async function handler(req, res) {
   await db.connect();
-  User.insertMany(userItems);
+
+  await User.deleteMany();
+
+  await User.insertMany(users);
+
   res.send({ message: "Users added." });
 }
