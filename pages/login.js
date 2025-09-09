@@ -2,8 +2,22 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
 
 function LoginPage() {
+  const {data: session}= useSession()
+
+  const router = useRouter()
+  const {redirect} = router.query
+
+  useEffect(()=>{
+    if (session?.user){
+      router.push(redirect||'/')
+    }
+  },[router, session, redirect])
+
   const {
     register,
     handleSubmit,
@@ -11,7 +25,20 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
 
-  function handleFormSubmit({ email, password }) {}
+  async function handleFormSubmit({ email, password }) {
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      if (result.error) {
+        console.log("failed");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Layout title="Login">
