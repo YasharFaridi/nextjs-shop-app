@@ -17,19 +17,19 @@ export default NextAuth({
 
       return token;
     },
+    async session({ session, token }) {
+      if (token?._id) session.user._id = token._id;
+
+      if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
+
+      return session;
+    },
   },
 
-  async session({ session, token }) {
-    if (token?._id) session.user._id = token._id;
-
-    if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
-
-    return session;
-  },
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        await db.connect;
+        await db.connect();
 
         const user = await User.findOne({
           email: credentials.email,

@@ -7,16 +7,16 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 
 function LoginPage() {
-  const {data: session}= useSession()
+  const { data: session } = useSession();
 
-  const router = useRouter()
-  const {redirect} = router.query
+  const router = useRouter();
+  const { redirect } = router.query;
 
-  useEffect(()=>{
-    if (session?.user){
-      router.push(redirect||'/')
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/");
     }
-  },[router, session, redirect])
+  }, [router, session, redirect]);
 
   const {
     register,
@@ -87,7 +87,7 @@ function LoginPage() {
               autoFocus
               placeholder="Password"
               className={`input input-bordered w-full max-w-xs transition-colors ${
-                errors.email
+                errors.password
                   ? "input-error"
                   : watch("password")
                   ? "input-success"

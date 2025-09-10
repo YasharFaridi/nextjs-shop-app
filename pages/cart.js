@@ -97,7 +97,7 @@ function CartPage() {
                     </p>
                     <button
                       className="btn btn-sm btn-success"
-                      onClick={() => router.push("/shipping")}
+                      onClick={() => router.push("login?redirect=/shipping")}
                     >
                       Checkout
                     </button>
