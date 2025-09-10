@@ -2,12 +2,14 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 
 function LoginPage() {
   const { data: session } = useSession();
+
+  const [loginError, setLoginError] = useState("");
 
   const router = useRouter();
   const { redirect } = router.query;
@@ -23,7 +25,7 @@ function LoginPage() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({mode:'onBlur'});
 
   async function handleFormSubmit({ email, password }) {
     try {
@@ -33,8 +35,12 @@ function LoginPage() {
         password,
       });
       if (result.error) {
-        console.log("failed");
-      }
+        setLoginError(result.error);
+      }else {
+    setLoginError("");
+    // اگر میخوای بعد از لاگین برو صفحه اصلی
+    window.location.href = "/";
+  }
     } catch (err) {
       console.log(err);
     }
@@ -45,9 +51,11 @@ function LoginPage() {
       <div className="flex flex-col items-center justify-center gap-6">
         <h2 className="text-2xl font-bold">Login Page</h2>
         <form
+        autoComplete="off"
           className="w-1/2 max-w-sm p-6 mx-auto mt-10 space-y-4 border-2 border-white shadow-md rounded-xl"
           onSubmit={handleSubmit(handleFormSubmit)}
         >
+          {loginError && <p className="text-red-500">{loginError}</p>}
           <div className="mb-4">
             <input
               {...register("email", {
@@ -59,7 +67,7 @@ function LoginPage() {
               })}
               type="email"
               id="email"
-              autoFocus
+              autoComplete="username"
               placeholder="Email"
               className={`input input-bordered w-full max-w-xs transition-colors ${
                 errors.email
@@ -84,7 +92,7 @@ function LoginPage() {
               })}
               type="password"
               id="password"
-              autoFocus
+              autoComplete="current-password"
               placeholder="Password"
               className={`input input-bordered w-full max-w-xs transition-colors ${
                 errors.password
@@ -98,8 +106,8 @@ function LoginPage() {
               <p className="text-error">{errors.password.message}</p>
             )}
           </div>
-          <div className="flex gap-4">
-            <button className="btn btn-primary">Login</button>
+          <div className="flex gap-4 w-full justify-center">
+            <button type="submit" className="btn btn-primary">Login</button>
             <Link href="register">
               <button className="btn btn-secondary">Register</button>
             </Link>
@@ -107,6 +115,7 @@ function LoginPage() {
         </form>
       </div>
     </Layout>
+    
   );
 }
 
