@@ -2,10 +2,14 @@ import Head from "next/head";
 import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
 import { CartContext } from "../contexts/Cart";
+import { useSession, signOut } from "next-auth/react";
+import Cookies from "js-cookie";
 
 function Layout({ title, children }) {
   const { state, dispatch } = useContext(CartContext);
   const { cart } = state;
+
+  const { status, data: session } = useSession();
 
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const [cartItemsPrice, setCartItemsPrice] = useState(0);
@@ -16,6 +20,11 @@ function Layout({ title, children }) {
       cart.cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)
     );
   }, [cart.cartItems]);
+
+  function signoutHandler(){
+    Cookies.remove()
+    signOut({callbackUrl:'/login'})
+  }
 
   return (
     <>
@@ -78,10 +87,42 @@ function Layout({ title, children }) {
                   </div>
                 </div>
               </div>
-
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
+              {status === "loading" ? (
+                <span className="loading loading-dots loading-md"></span>
+              ) : session?.user ? (
+                <div className="dropdown dropdown-bottom dropdown-end">
+                  <div tabIndex={0} className="avatar">
+                    <div className="w-6 rounded-full ring ring-success ring-offset-base-100 ">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={28}
+                        height={28}
+                        viewBox="0 0 28 28"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 19.2c-2.5 0-4.71-1.28-6-3.2c.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1a7.23 7.23 0 0 1-6 3.2M12 5a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-3A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"
+                        ></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52 mt-2"
+                  >
+                    <li>
+                      <Link href='/profile'>Profile</Link>
+                    </li>
+                    <li>
+                      <a href='#' onClick={signoutHandler} >Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <Link href="/login">
+                  <a>Login</a>
+                </Link>
+              )}
             </div>
           </div>
         </header>
